@@ -284,9 +284,9 @@ class _DatePickerHeader extends StatelessWidget {
         break;
     }
     final TextStyle? dayStyle =
-        headerTextTheme.headline4?.copyWith(color: dayColor, height: 1.4);
+        headerTextTheme.headlineSmall?.copyWith(color: dayColor, height: 1.4);
     final TextStyle? yearStyle =
-        headerTextTheme.subtitle1?.copyWith(color: yearColor, height: 1.4);
+        headerTextTheme.bodyMedium?.copyWith(color: yearColor, height: 1.4);
 
     Color backgroundColor;
     switch (themeData.brightness) {
@@ -294,7 +294,7 @@ class _DatePickerHeader extends StatelessWidget {
         backgroundColor = themeData.primaryColor;
         break;
       case Brightness.dark:
-        backgroundColor = themeData.backgroundColor;
+        backgroundColor = themeData.dialogBackgroundColor;
         break;
     }
 
@@ -785,8 +785,8 @@ class HijriDayPicker extends StatelessWidget {
     final int firstDayOffset = _computeFirstDayOffset(year, month);
     final List<Widget> labels = <Widget>[];
 
-    labels.addAll(
-        _getDayHeaders(context, themeData.textTheme.caption, localizations));
+    labels.addAll(_getDayHeaders(
+        context, themeData.textTheme.titleMedium, localizations));
 
     for (int i = 0; true; i += 1) {
       final int day = i - firstDayOffset + 1;
@@ -806,26 +806,26 @@ class HijriDayPicker extends StatelessWidget {
                 !selectableDayPredicate!(dayToBuild));
 
         BoxDecoration? decoration;
-        TextStyle? itemStyle = themeData.textTheme.bodyText2;
+        TextStyle? itemStyle = themeData.textTheme.bodyMedium;
 
         final bool isSelectedDay = selectedDate.hYear == year &&
             selectedDate.hMonth == month &&
             selectedDate.hDay == day;
         if (isSelectedDay) {
           // The selected day gets a circle background highlight, and a contrasting text color.
-          itemStyle = themeData.textTheme.bodyText1?.copyWith(
+          itemStyle = themeData.textTheme.bodyMedium?.copyWith(
             color: themeData.colorScheme.onSecondary,
           );
           decoration = new BoxDecoration(
               color: themeData.colorScheme.secondary, shape: BoxShape.circle);
         } else if (disabled) {
-          itemStyle = themeData.textTheme.bodyText2
+          itemStyle = themeData.textTheme.bodyMedium
               ?.copyWith(color: themeData.disabledColor);
         } else if (currentDate.hYear == year &&
             currentDate.hMonth == month &&
             currentDate.hDay == day) {
           // The current day gets a different text color.
-          itemStyle = themeData.textTheme.bodyText1
+          itemStyle = themeData.textTheme.bodyMedium
               ?.copyWith(color: themeData.colorScheme.secondary);
         }
 
@@ -877,7 +877,7 @@ class HijriDayPicker extends StatelessWidget {
               child: new ExcludeSemantics(
                 child: new Text(
                   "${displayedMonth.toFormat("MMMM")} ${displayedMonth.hYear}",
-                  style: themeData.textTheme.subtitle1,
+                  style: themeData.textTheme.titleSmall,
                 ),
               ),
             ),
@@ -961,7 +961,7 @@ class _HijriYearPickerState extends State<HijriYearPicker> {
     assert(debugCheckHasMaterial(context));
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle? style = themeData.textTheme.bodyText2;
+    final TextStyle? style = themeData.textTheme.bodyMedium;
     return new ListView.builder(
       controller: scrollController,
       itemExtent: _itemExtent,
@@ -970,7 +970,7 @@ class _HijriYearPickerState extends State<HijriYearPicker> {
         final int year = widget.firstDate.hYear + index;
         final bool isSelected = year == widget.selectedDate.hYear;
         final TextStyle? itemStyle = isSelected
-            ? themeData.textTheme.headline5
+            ? themeData.textTheme.titleMedium
                 ?.copyWith(color: themeData.colorScheme.secondary)
             : style;
         return new InkWell(
